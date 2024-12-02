@@ -3,7 +3,8 @@ import { NextResponse } from "next/server";
 
 export async function GET(req, { params }) {
   try {
-    const question = questions.data.find((item) => item.id === params.id);
+    const { id } = await params;
+    const question = questions.data.find((item) => item.id === id);
 
     if (!question) {
       return new NextResponse("not found", { status: 404 });
@@ -12,7 +13,7 @@ export async function GET(req, { params }) {
     const { correct_answer } = question;
 
     const filteredQuestions = questions.data.filter(
-      (item) => item.id !== params.id
+      (item) => item.id !== id
     );
     const random = Math.floor(Math.random() * filteredQuestions.length);
 
